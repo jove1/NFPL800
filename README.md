@@ -2,10 +2,13 @@
 Cvicenie k NFPL800
 ==================
 
-Fazovy diagram CuAg.
+CuAg phase diagram.
 
-Volne data:
------------
+[](CuAg.png)
+
+
+Free databases:
+---------------
 * [SGTE Pure Element Database](https://www.sgte.net/en/free-pure-substance-database)
 * [NIST Solder Systems](https://www.metallurgy.nist.gov/phase/solder/solder.html)
 * COST 507: Thermochemical Database for Light Metal Alloys 
