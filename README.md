@@ -1,5 +1,5 @@
-Cvicenie k NFPL800
-==================
+NFPL800 Excercise
+=================
 
 Plot CuAg phase diagram by brute force convex hull method.
 
