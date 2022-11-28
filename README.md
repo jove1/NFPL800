@@ -5,6 +5,9 @@ Plot CuAg phase diagram by brute force convex hull method.
 
 ![](CuAg.png)
 
+![](AgCu_eq.png)
+
+
 Free databases:
 ---------------
 * [SGTE Pure Element Database](https://www.sgte.net/en/free-pure-substance-database)
