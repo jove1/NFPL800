@@ -6,7 +6,7 @@ Plot CuAg phase diagram by brute force convex hull method.
 ![](CuAg.png)
 
 
-Plot invariant equilibria by solving equlibrium equations. Trace phase boundaries.
+Plot invariant equilibria by solving equlibrium equations. Trace phase boundaries (à la Clausius-Clapeyron).
 ```
 Ag melting point 961.7795532622605
 Cu melting point 1084.6199854338527
@@ -30,6 +30,6 @@ Free databases:
 
 Credit ideas:
 -------------
-* ternary system (isothermal section, vertical section, liquidus projection, 3D plot)
-* more complex real system (fixed composition phases, more complex models: SRO, LRO)
-* equation for phase boundaries (like Clausius–Clapeyron) 
+* ternary system (isothermal section, isopleth/vertical section, liquidus projection, 3D plot)
+* more complex real system (fixed/limited composition phases, more complex models: SRO, LRO)
+* Calphad-like fitting of Gibbs energy parameters
