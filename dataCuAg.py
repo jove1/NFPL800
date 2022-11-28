@@ -40,7 +40,7 @@ def L1_AgCu_fcc(T):
     return -4310.12
 
 def G_AgCu_fcc(T, x):
-    xAg, xCu = x, 1-x
+    xCu, xAg = x, 1-x
     return (
         xAg * G_Ag_ref(T)  + xCu * G_Cu_ref(T) # reference surface
         + R*T*(xlnx(xAg) + xlnx(xCu)) # mixing entropy
@@ -70,7 +70,7 @@ def L1_AgCu_liq(T):
     return +1654.38-2.35285*T
 
 def G_AgCu_liq(T, x):
-    xAg, xCu = x, 1-x
+    xCu, xAg = x, 1-x
     return (
         xAg * G_Ag_liq(T)  + xCu * G_Cu_liq(T) # reference surface
         + R*T*(xlnx(xAg) + xlnx(xCu)) # mixing entropy

@@ -20,8 +20,8 @@ ax2 = figure().gca()
 
 for T in linspace(20, 1200, Ntemp):
     print(".", end="", flush=True)
-    points[:N,   1] =  G_AgCu_fcc(T0+T, 1-x)
-    points[N:2*N,1] =  G_AgCu_liq(T0+T, 1-x)
+    points[:N,   1] =  G_AgCu_fcc(T0+T, x)
+    points[N:2*N,1] =  G_AgCu_liq(T0+T, x)
    
     if ax1:
        ax1.plot( points[:N,0], points[:N,1], "C0-") 
@@ -50,5 +50,6 @@ for T in linspace(20, 1200, Ntemp):
 print()
 ax2.set_xlim(0,1)
 ax2.grid(True)
+savefig("CuAg.png")
 show()
 
