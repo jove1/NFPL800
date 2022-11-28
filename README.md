@@ -1,11 +1,9 @@
+NFPL800 Excercise
+=================
 
-Cvicenie k NFPL800
-==================
+Plot CuAg phase diagram by brute force convex hull method.
 
-CuAg phase diagram.
-
-[](CuAg.png)
-
+![](CuAg.png)
 
 Free databases:
 ---------------
@@ -14,8 +12,8 @@ Free databases:
 * COST 507: Thermochemical Database for Light Metal Alloys 
 
 
-Zapocet:
---------
+Credit ideas:
+-------------
 * ternary system (isothermal section, vertical section, liquidus projection, 3D plot)
 * more complex real system (fixed composition phases, more complex models: SRO, LRO)
 * equation for phase boundaries (like Clausius–Clapeyron) 
