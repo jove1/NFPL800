@@ -50,6 +50,4 @@ for T in linspace(20, 1200, Ntemp):
 print()
 ax2.set_xlim(0,1)
 ax2.grid(True)
-savefig("CuAg.png")
 show()
-
