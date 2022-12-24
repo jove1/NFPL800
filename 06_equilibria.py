@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 from pylab import *
 
@@ -13,7 +13,7 @@ for x1, x2, T in pickle.loads(gzip.decompress(base64.b64decode(data))):
     plot([x1, x2], [T, T], "k-", lw=0.2)
 
 #
-# now start with the equilibria calculations
+# Now start with the equilibria calculations
 #
 
 from dataCuAg import *
