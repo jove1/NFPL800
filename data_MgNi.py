@@ -58,7 +58,7 @@ def GFCCMG(T):
 # (Mg,Ni)1
 #
 MgNi_liq = Phase()
-MgNi_liq.X = lambda y: y[1]
+MgNi_liq.X = lambda y: y
 MgNi_liq.G = lambda T, y: (
 #
 # (mechanical mixture)
@@ -89,7 +89,7 @@ MgNi_liq.G = lambda T, y: (
 # (Mg,Ni)1 (Va)1
 #
 MgNi_fcc = Phase()
-MgNi_fcc.X = lambda y: y[1]
+MgNi_fcc.X = lambda y: y
 MgNi_fcc.G = lambda T, y: (
 #
 # (mechanical mixture)
@@ -126,7 +126,7 @@ MgNi_fcc.G = lambda T, y: (
 # (Mg,Ni)1 (Va)0.5
 #
 MgNi_hcp = Phase()
-MgNi_hcp.X = lambda y: y[1]
+MgNi_hcp.X = lambda y: y
 MgNi_hcp.G = lambda T, y: (
 #
 # (mechanical mixture)
@@ -163,7 +163,7 @@ MgNi_hcp.G = lambda T, y: (
 # (Mg,Ni)2 (Mg,Ni)1
 #
 MgNi2 = Phase()
-MgNi2.X = lambda y: (2*y[1] + y[3])/3
+MgNi2.X = lambda y: (2*y[:2] + y[2:])/3
 MgNi2.G = lambda T, y: (
 #
 # (mechanical mixture)
@@ -204,7 +204,7 @@ MgNi2.G = lambda T, y: (
 # (Mg)2 (Ni)1
 #
 Mg2Ni = Phase()
-Mg2Ni.X = lambda y: np.array([1/3])
+Mg2Ni.X = lambda y: np.array([2/3, 1/3])
 Mg2Ni.G = lambda T, y: (
 #
 # PARAM G(MG2NI,MG:NI;0) 298.15 -82211.2+571.0183*T-95.992*T*LN(T);
