@@ -1,5 +1,8 @@
 
-import numpy as np
+try:
+    import autograd.numpy as np
+except ImportError:
+    import numpy as np
 
 R = 8.314
 def xlnx(x):
@@ -34,7 +37,7 @@ def GHSERCU(T):
 #   CONSTITUENT LIQUID:L  :AG,BI,CU,PB,SB,SN : !
 #
 CuAg_liq = Phase()
-CuAg_liq.X = lambda y: y[1]
+CuAg_liq.X = lambda y: y
 CuAg_liq.G = lambda T, y: (
 #
 # (mechanical mixture)
@@ -73,7 +76,7 @@ CuAg_liq.G = lambda T, y: (
 #   CONSTITUENT FCC_A1  :AG%,BI,CU%,PB%,SB,SN :VA : !
 #
 CuAg_fcc = Phase()
-CuAg_fcc.X = lambda y: y[1]
+CuAg_fcc.X = lambda y: y
 CuAg_fcc.G = lambda T, y: (
 #
 # (mechanical mixture)

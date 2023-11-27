@@ -1,5 +1,8 @@
 
-import numpy as np
+try:
+    import autograd.numpy as np
+except ImportError:
+    import numpy as np
 
 R = 8.314
 def xlnx(x):
