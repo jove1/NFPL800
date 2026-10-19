@@ -37,3 +37,18 @@ T7 = Tk(7)
 Tm1 = Tk(-1)
 Tm9 = Tk(-9)
 
+
+# https://www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses
+atomic_mass_table = {
+    "H": 1.008,
+    "O": 16.000,
+    "Cu": 63.546,
+    "Al": 26.982
+}
+
+def at2wt(elements, x):
+    w = np.array([ atomic_mass_table[e] for e in elements ])
+    raise NotImplementedError
+
+def wt2at(elements, x):
+    raise NotImplementedError

@@ -7,7 +7,7 @@ plt.rc("axes", grid=True)
 from common import *
 
 
-func = FT(0, {T:1, T2:1e-3, TLNT:2}, 1000)
+func = FT(0, {C: 5000, T:1, T2:1e-3, TLNT:2}, 1000)
 
 t = np.linspace(0, 1000)
 
