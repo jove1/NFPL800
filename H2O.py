@@ -2,23 +2,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-
-def WRITE_YOUR_OWN_FUNCTION(x):
-    print("Just a placeholder function for your own code!")
-    return np.random.normal(size=np.asarray(x).shape)
-
-D = lambda f, x, eps=1e-3: WRITE_YOUR_OWN_FUNCTION(x) # NUMERICAL DERIVATIVE OF f(x)
-D2 = lambda f, x, eps=1e-3: WRITE_YOUR_OWN_FUNCTION(x) # NUMERICAL 2ND DERIVATIVE OF f(x)
-
-plt.figure()
-x = np.linspace(-1,1)
-f = lambda x: x**2
-plt.plot(x, f(x))
-plt.plot(x, D(f, x))
-plt.plot(x, 2*x, "--")
-plt.plot(x, D2(f, x))
-plt.plot(x, np.full_like(x, 2), "--")
-plt.grid()
+plt.rc("axes", grid=True)
 
 #$
 #$ PSUB - TC Public Substances Database (Version 1.1)
@@ -69,82 +53,81 @@ plt.grid()
 #7      -331037.282+741.178606*T-117.41*T*LN(T);  6.01000E+02  N !              
 #
 
-LN = np.log
-G_gas = lambda T: -250423.434+4.45470381*T-28.40916*T*LN(T)-.00623741*T**2-6.01526167E-08*T**3-64163.45*T**(-1)
-G_liq = lambda T: -332319.672+1078.59563*T-186.8669*T*LN(T)+.2320948*T**2-9.14296167E-05*T**3+978019*T**(-1)
+from common import *
+
+G_gas = FT(298.14, { C: -250423.434, T: 4.45470381, TLNT: -28.40916, T2: -.00623741, T3: -6.01526167E-08, Tm1: -64163.45}, 1100)
+G_liq = FT(298.14, { C: -332319.672, T: 1078.59563, TLNT: -186.8669, T2: +.2320948, T3: -9.14296167E-05, Tm1: +978019}, 500)
 
 # CRC Handbook
-H298_O2, S298_O2 = 0, 205.2
-H298_H2, S298_H2 = 0, 130.7
-
-H298_liq, G298_liq, S298_liq, cp_liq = -285.8e3, -237.1e3, 70.0, 75.3
-H298_gas, G298_gas, S298_gas, cp_gas = -241.8e3, -228.6e3, 188.8, 33.6
+H_liq_CRC_298, G_liq_CRC_298, S_liq_CRC_298, cp_liq_CRC = -285.8e3, -237.1e3, 70.0, 75.3
+H_gas_CRC_298, G_gas_CRC_298, S_gas_CRC_298, cp_gas_CRC = -241.8e3, -228.6e3, 188.8, 33.6
 
 T0 = 273.15
 T298 = 298.15
 T = T0 + np.linspace(20, 200)
 
-S_liq = lambda T: WRITE_YOUR_OWN_FUNCTION(T) # ENTROPY FROM CRC Handbook data
-S_gas = lambda T: WRITE_YOUR_OWN_FUNCTION(T) # ENTROPY FROM CRC Handbook data
+S_liq_CRC = lambda T: NotImplementedError # ENTROPY FROM CRC Handbook data
+S_gas_CRC = lambda T: NotImplementedError # ENTROPY FROM CRC Handbook data
 
 plt.figure()
 plt.title("S(T)")
-plt.plot(T-T0, WRITE_YOUR_OWN_FUNCTION(T)) # ENTROPY FROM G_liq
-plt.plot(T-T0, S_liq(T), "--" )
-plt.plot(T-T0, WRITE_YOUR_OWN_FUNCTION(T)) # ENTROPY FROM G_gas
-plt.plot(T-T0, S_gas(T), "--" )
-plt.grid()
+plt.plot(T-T0, NotImplementedError) # ENTROPY FROM G_liq
+plt.plot(T-T0, S_liq_CRC(T), "--" )
+plt.plot(T-T0, NotImplementedError) # ENTROPY FROM G_gas
+plt.plot(T-T0, S_gas_CRC(T), "--" )
 
-H_liq = lambda T: WRITE_YOUR_OWN_FUNCTION(T) # ENTHALPY FROM CRC Handbook data
-H_gas = lambda T: WRITE_YOUR_OWN_FUNCTION(T) # ENTHALPY FROM CRC Handbook data
+H_liq_CRC = lambda T: NotImplementedError # ENTHALPY FROM CRC Handbook data
+H_gas_CRC = lambda T: NotImplementedError # ENTHALPY FROM CRC Handbook data
 
 plt.figure()
 plt.title("H(T)")
-plt.plot(T-T0, WRITE_YOUR_OWN_FUNCTION(T)) # ENTHALPY FROM G_liq
-plt.plot(T-T0, H_liq(T), "--" )
-plt.plot(T-T0, WRITE_YOUR_OWN_FUNCTION(T)) # ENTHALPY FROM G_gas
-plt.plot(T-T0, H_gas(T), "--" )
-plt.grid()
+plt.plot(T-T0, NotImplementedError) # ENTHALPY FROM G_liq
+plt.plot(T-T0, H_liq_CRC(T), "--" )
+plt.plot(T-T0, NotImplementedError) # ENTHALPY FROM G_gas
+plt.plot(T-T0, H_gas_CRC(T), "--" )
 
-G_liq2 = lambda T: WRITE_YOUR_OWN_FUNCTION(T) # GIBBS ENERGY FROM CRC Handbook data
-G_gas2 = lambda T: WRITE_YOUR_OWN_FUNCTION(T) # GIBBS ENERGY FROM CRC Handbook data
+
+G_liq_CRC = lambda T: NotImplementedError # GIBBS ENERGY FROM CRC Handbook data
+G_gas_CRC = lambda T: NotImplementedError # GIBBS ENERGY FROM CRC Handbook data
 
 plt.figure()
 plt.title("G(T)")
 plt.plot(T-T0, G_liq(T) )
-plt.plot(T-T0, G_liq2(T), "--")
+plt.plot(T-T0, G_liq_CRC(T), "--")
 plt.plot(T-T0, G_gas(T) )
-plt.plot(T-T0, G_gas2(T), "--")
-plt.grid()
+plt.plot(T-T0, G_gas_CRC(T), "--")
 
-print("S298_liq", S298_liq, "???") # FILL IN EXPRESSION FROM G_liq
-print("S298_gas", S298_gas, "???") # FILL IN EXPRESSION FROM G_gas
 
-print("H298_liq", H298_liq, "???") # FILL IN EXPRESSION FROM G_liq
-print("H298_gas", H298_gas, "???") # FILL IN EXPRESSION FROM G_gas
+print("S298_liq", S_liq_CRC_298, NotImplementedError) # FILL IN EXPRESSION FROM G_liq
+print("S298_gas", S_gas_CRC_298, NotImplementedError) # FILL IN EXPRESSION FROM G_gas
 
-print("cp_liq", cp_liq, "???") # FILL IN EXPRESSION FROM G_liq
-print("cp_gas", cp_gas, "???") # FILL IN EXPRESSION FROM G_gas
+print("H298_liq", H_liq_CRC_298, NotImplementedError) # FILL IN EXPRESSION FROM G_liq
+print("H298_gas", H_gas_CRC_298, NotImplementedError) # FILL IN EXPRESSION FROM G_gas
+
+print("cp_liq", cp_liq_CRC, NotImplementedError) # FILL IN EXPRESSION FROM G_liq
+print("cp_gas", cp_gas_CRC, NotImplementedError) # FILL IN EXPRESSION FROM G_gas
 print()
 
-print("G298_liq", G298_liq, "???") # CALCULATE USING OTHER CRC Handbook data
-print("G298_gas", G298_gas, "???") # CALCULATE USING OTHER CRC Handbook data
+print("G298_liq", G_liq_CRC_298, NotImplementedError) # CALCULATE USING OTHER CRC Handbook data
+print("G298_gas", G_gas_CRC_298, NotImplementedError) # CALCULATE USING OTHER CRC Handbook data
 print()
 
 # CALCULATE BOILING POINT AND LATENT HEAT USING Thermocalc GIBBS FUNCTIONS G_liq and G_gas
 from scipy.optimize import root_scalar
-Tboil = root_scalar( lambda T: T-T0-123.456789, # WRITE YOUR OWN FUNCTION
+Tboil = root_scalar( lambda T: NotImplementedError, # WRITE YOUR OWN FUNCTION
         bracket=(T0+20,T0+200)).root
 
 print("Tboil = 100 C", Tboil - T0 )
-print("Hvap = 40.65 kJ/mol", "???") # CALCULATE FROM G_liq AND G_gas
+print("Hvap = 40.65 kJ/mol", NotImplementedError ) # CALCULATE FROM G_liq AND G_gas
 print()
 
-# CALCULATE BOILING POINT AND LATENT HEAT USING CRC Handbook GIBBS FUNCTIONS G_liq2 and G_gas2
-Tboil = T0 + 123.456789
+# CALCULATE BOILING POINT AND LATENT HEAT USING CRC Handbook GIBBS FUNCTIONS G_liq_CRC and G_gas_CRC
+Tboil = root_scalar( lambda T: NotImplementedError, # WRITE YOUR OWN FUNCTION
+        bracket=(T0+20,T0+200)).root
+
 
 print("Tboil = 100 C", Tboil - T0 )
-print("Hvap = 40.65 kJ/mol", "???") # CALCULATE FROM G_liq2 AND G_gas2
+print("Hvap = 40.65 kJ/mol", NotImplementedError ) # CALCULATE FROM G_liq2 AND G_gas2
 print()
 
 plt.show()
