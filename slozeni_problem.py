@@ -36,8 +36,23 @@ def at2wt(elements, x):
     # (number_of_elements,).
     ma = np.array([atomic_mass_table[e] for e in elements])
 
-    r = np.moveaxis(x, 0, -1) * ma
-    return r / r.sum(axis=-1, keepdims=True)
+    # STUDENT TASK: Convert atomic proportions into weight fractions. Each
+    # component's contribution to mass depends on both its atomic amount and
+    # its atomic mass; normalize the contributions so they sum to one along the
+    # element axis.
+    #
+    # IMPORTANT: x may contain NumPy arrays, not just single numbers.  For
+    # example, [x, 1-x] in the plotting section becomes an array of shape
+    # (number_of_elements, number_of_samples). A 1-D mass array w will not
+    # automatically align with the first axis of that 2-D array under NumPy's
+    # default broadcasting rules. Arrange dimensions as needed so the mass for
+    # each element is applied to every sample.
+    #
+    # Broadcasting tutorial:
+    # https://numpy.org/doc/stable/user/basics.broadcasting.html
+#PROBLEM
+    raise NotImplementedError
+#END
 
 
 def wt2at(elements, x):
@@ -56,10 +71,21 @@ def wt2at(elements, x):
     numpy.ndarray
         Atomic fractions with the same shape as the input composition.
     """
-    ma = np.array([atomic_mass_table[e] for e in elements])
-
-    r = np.moveaxis(x, 0, -1) / ma
-    return r / r.sum(axis=-1, keepdims=True)
+    # STUDENT TASK:
+    # Convert the supplied weight fractions into atomic proportions using the
+    # atomic masses in atomic_mass_table, then normalize along the element
+    # axis so the atomic fractions for each sample sum to one.
+    #
+    # As in at2wt, x can be multidimensional. In the plot below, [x, 1-x]
+    # represents two components evaluated at many sample points. Ensure that
+    # the atomic-mass array broadcasts across the sample dimensions correctly;
+    # remember that NumPy aligns dimensions from the right.
+    #
+    # Broadcasting tutorial:
+    # https://numpy.org/doc/stable/user/basics.broadcasting.html
+#PROBLEM
+    raise NotImplementedError
+#END
 
 
 if __name__ == "__main__":

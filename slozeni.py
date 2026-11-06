@@ -50,7 +50,12 @@ def at2wt(elements, x):
     #
     # Broadcasting tutorial:
     # https://numpy.org/doc/stable/user/basics.broadcasting.html
-    raise NotImplementedError
+#PROBLEM
+#    raise NotImplementedError
+#SOLUTION
+    r = np.moveaxis(x, 0, -1) * ma
+    return r / r.sum(axis=-1, keepdims=True)
+#END
 
 
 def wt2at(elements, x):
@@ -81,7 +86,14 @@ def wt2at(elements, x):
     #
     # Broadcasting tutorial:
     # https://numpy.org/doc/stable/user/basics.broadcasting.html
-    raise NotImplementedError
+#PROBLEM
+#    raise NotImplementedError
+#SOLUTION
+    ma = np.array([atomic_mass_table[e] for e in elements])
+
+    r = np.moveaxis(x, 0, -1) / ma
+    return r / r.sum(axis=-1, keepdims=True)
+#END
 
 
 if __name__ == "__main__":

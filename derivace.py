@@ -69,16 +69,28 @@ def C(T, d=0):
     """
     if d == 0:
         return 1
-    # TODO: implement the required derivative behavior for d > 0.
-    raise NotImplementedError
+#PROBLEM
+#    # TODO: implement the required derivative behavior for d > 0.
+#    raise NotImplementedError
+#SOLUTION
+    else:
+        return 0
+#END
 
 
 def T(T, d=0):
     """Identity basis function f(T) = T."""
     if d == 0:
         return T
-    # TODO: implement derivative behavior for d > 0.
-    raise NotImplementedError
+#PROBLEM
+#    # TODO: implement derivative behavior for d > 0.
+#    raise NotImplementedError
+#SOLUTION
+    elif d == 1:
+        return 1
+    else:
+        return 0
+#END
 
 
 def Tk(k):
@@ -95,8 +107,16 @@ def Tk(k):
     def f(T, d=0):
         if d == 0:
             return T**k
-        # TODO: implement derivative behavior for d > 0.
+#PROBLEM
+#        # TODO: implement derivative behavior for d > 0.
+#        raise NotImplementedError
+#SOLUTION
+        elif d == 1:
+            return k*T**(k-1)
+        elif d == 2:
+            return k*(k-1)*T**(k-2)
         raise NotImplementedError
+#END
     return f
 
 
@@ -104,8 +124,16 @@ def TLNT(T, d=0):
     """Logarithmic basis function f(T) = T * log(T)."""
     if d == 0:
         return T * np.log(T)
-    # TODO: implement derivative behavior for d > 0.
+#PROBLEM
+#    # TODO: implement derivative behavior for d > 0.
+#    raise NotImplementedError
+#SOLUTION
+    elif d == 1:
+        return 1 + np.log(T)
+    elif d == 2:
+        return 1/T
     raise NotImplementedError
+#END
 
 
 # Named power functions used as basis functions in piecewise expressions.
@@ -149,14 +177,18 @@ if __name__ == "__main__":
     plt.title("First derivative")
     plt.legend()
 
-    # TODO: replace NotImplementedError below with a numerical
-    # central-difference approximation for the second derivative. Then compare
-    # that approximation with func(t, d=2).
-    #
-    # A common central-difference formula for the second derivative uses
-    # f(t + eps), f(t), and f(t - eps). Derive and implement the expression.
     plt.figure()
-    plt.plot(t, NotImplementedError, ".")
+#PROBLEM
+#    # TODO: replace NotImplementedError below with a numerical
+#    # central-difference approximation for the second derivative. Then compare
+#    # that approximation with func(t, d=2).
+#    #
+#    # A common central-difference formula for the second derivative uses
+#    # f(t + eps), f(t), and f(t - eps). Derive and implement the expression.
+#    plt.plot(t, NotImplementedError, ".")
+#SOLUTION
+    plt.plot(t, ( func(t+eps) - 2*func(t) + func(t-eps) )/eps/eps, ".")
+#END
     plt.plot(t, func(t, d=2))
     plt.title("Second derivative")
 

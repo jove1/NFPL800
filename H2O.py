@@ -78,31 +78,62 @@ T0 = 273.15
 T298 = 298.15
 T = T0 + np.linspace(20, 200)
 
-# TODO: entropy from the CRC reference data, use the constant-Cp approximation.
-S_liq_CRC = lambda T: NotImplementedError
-S_gas_CRC = lambda T: NotImplementedError
+#PROBLEM
+## TODO: entropy from the CRC reference data, use the constant-Cp approximation.
+#S_liq_CRC = lambda T: NotImplementedError
+#S_gas_CRC = lambda T: NotImplementedError
+#SOLUTION
+S_liq_CRC = lambda T: S_liq_CRC_298 + cp_liq_CRC * np.log(T/T298)
+S_gas_CRC = lambda T: S_gas_CRC_298 + cp_gas_CRC * np.log(T/T298)
+#END
 
 plt.figure()
 plt.title("S(T)")
-plt.plot(T-T0, NotImplementedError) # TODO: Compare entropy calculated from G_liq
+#PROBLEM
+#plt.plot(T-T0, NotImplementedError) # TODO: Compare entropy calculated from G_liq
+#SOLUTION
+plt.plot(T-T0, -G_liq(T, d=1)) # TODO: Compare entropy calculated from G_liq
+#END
 plt.plot(T-T0, S_liq_CRC(T), "--" )
-plt.plot(T-T0, NotImplementedError) # TODO: Compare entropy calculated from G_gas
+#PROBLEM
+#plt.plot(T-T0, NotImplementedError) # TODO: Compare entropy calculated from G_gas
+#SOLUTION
+plt.plot(T-T0, -G_gas(T, d=1)) # TODO: Compare entropy calculated from G_gas
+#END
 plt.plot(T-T0, S_gas_CRC(T), "--" )
 
-# TODO: enthalpy from the CRC reference data, use the constant-Cp approximation
-H_liq_CRC = lambda T: NotImplementedError
-H_gas_CRC = lambda T: NotImplementedError
+#PROBLEM
+## TODO: enthalpy from the CRC reference data, use the constant-Cp approximation
+#H_liq_CRC = lambda T: NotImplementedError
+#H_gas_CRC = lambda T: NotImplementedError
+#SOLUTION
+H_liq_CRC = lambda T: H_liq_CRC_298 + cp_liq_CRC * (T-T298)
+H_gas_CRC = lambda T: H_gas_CRC_298 + cp_gas_CRC * (T-T298)
+#END
 
 plt.figure()
 plt.title("H(T)")
-plt.plot(T-T0, NotImplementedError) # TODO: Compare enthalpy from the G_liq
+#PROBLEM
+#plt.plot(T-T0, NotImplementedError) # TODO: Compare enthalpy from the G_liq
+#SOLUTION
+plt.plot(T-T0, G_liq(T) - T*G_liq(T, d=1)) # TODO: Compare enthalpy from the G_liq
+#END
 plt.plot(T-T0, H_liq_CRC(T), "--" )
-plt.plot(T-T0, NotImplementedError) # TODO: Compare enthalpy from the G_gas
+#PROBLEM
+#plt.plot(T-T0, NotImplementedError) # TODO: Compare enthalpy from the G_gas
+#SOLUTION
+plt.plot(T-T0, G_gas(T) - T*G_gas(T, d=1)) # TODO: Compare enthalpy from the G_gas
+#END
 plt.plot(T-T0, H_gas_CRC(T), "--" )
 
-# TODO: Gibbs energy from the CRC reference data, combine S_*_CRC and H_*_CRC
-G_liq_CRC = lambda T: NotImplementedError
-G_gas_CRC = lambda T: NotImplementedError
+#PROBLEM
+## TODO: Gibbs energy from the CRC reference data, combine S_*_CRC and H_*_CRC
+#G_liq_CRC = lambda T: NotImplementedError
+#G_gas_CRC = lambda T: NotImplementedError
+#SOLUTION
+G_liq_CRC = lambda T: H_liq_CRC(T) - T*S_liq_CRC(T)
+G_gas_CRC = lambda T: H_gas_CRC(T) - T*S_gas_CRC(T)
+#END
 
 plt.figure()
 plt.title("G(T)")
@@ -112,34 +143,63 @@ plt.plot(T-T0, G_gas(T) )
 plt.plot(T-T0, G_gas_CRC(T), "--")
 
 
-# TODO: Compare CRC reference data to values obtained from TDB functions (G_liq, G_gas)
-print("S298_liq", S_liq_CRC_298, NotImplementedError)
-print("S298_gas", S_gas_CRC_298, NotImplementedError)
+#PROBLEM
+## TODO: Compare CRC reference data to values obtained from TDB functions (G_liq, G_gas)
+#print("S298_liq", S_liq_CRC_298, NotImplementedError)
+#print("S298_gas", S_gas_CRC_298, NotImplementedError)
+#
+#print("H298_liq", H_liq_CRC_298, NotImplementedError)
+#print("H298_gas", H_gas_CRC_298, NotImplementedError)
+#
+#print("cp_liq", cp_liq_CRC, NotImplementedError)
+#print("cp_gas", cp_gas_CRC, NotImplementedError)
+#SOLUTION
+print("S298_liq", S_liq_CRC_298, -G_liq(T298, d=1))
+print("S298_gas", S_gas_CRC_298, -G_gas(T298, d=1))
 
-print("H298_liq", H_liq_CRC_298, NotImplementedError)
-print("H298_gas", H_gas_CRC_298, NotImplementedError)
+print("H298_liq", H_liq_CRC_298, G_liq(T298) - T298*G_liq(T298, d=1))
+print("H298_gas", H_gas_CRC_298, G_gas(T298) - T298*G_gas(T298, d=1))
 
-print("cp_liq", cp_liq_CRC, NotImplementedError)
-print("cp_gas", cp_gas_CRC, NotImplementedError)
+print("cp_liq", cp_liq_CRC, -T298*G_liq(T298, d=2))
+print("cp_gas", cp_gas_CRC, -T298*G_gas(T298, d=2))
+#END
 print()
 
-# TODO: Calculate boiling point and latent heat using G_liq and G_gas.  At
-# liquid-vapour equilibrium, G_liq(T) = G_gas(T).
+#PROBLEM
+## TODO: Calculate boiling point and latent heat using G_liq and G_gas.  At
+## liquid-vapour equilibrium, G_liq(T) = G_gas(T).
+#from scipy.optimize import root_scalar
+#Tboil = root_scalar( lambda T: NotImplementedError,
+#        bracket=(T0+20,T0+200)).root
+#
+#print("Tboil = 100 C", Tboil - T0 )
+#print("Hvap = 40.65 kJ/mol", NotImplementedError)
+#print()
+#SOLUTION
 from scipy.optimize import root_scalar
-Tboil = root_scalar( lambda T: NotImplementedError,
+Tboil = root_scalar( lambda T: G_liq(T) - G_gas(T),
         bracket=(T0+20,T0+200)).root
 
 print("Tboil = 100 C", Tboil - T0 )
-print("Hvap = 40.65 kJ/mol", NotImplementedError)
+print("Hvap = 40.65 kJ/mol", (G_gas(Tboil) - Tboil*G_gas(Tboil, d=1)) -
+                             (G_liq(Tboil) - Tboil*G_liq(Tboil, d=1)))
 print()
+#END
 
-# TODO: Calculate boiling point and latent heat using G_liq_CRC and G_gas_CRC.
-Tboil = root_scalar( lambda T: NotImplementedError,
+#PROBLEM
+## TODO: Calculate boiling point and latent heat using G_liq_CRC and G_gas_CRC.
+#Tboil = NotImplementedError
+#
+#print("Tboil = 100 C", Tboil - T0 )
+#print("Hvap = 40.65 kJ/mol", NotImplementedError)
+#print()
+#SOLUTION
+Tboil = root_scalar( lambda T: G_liq_CRC(T) - G_gas_CRC(T),
         bracket=(T0+20,T0+200)).root
 
-
 print("Tboil = 100 C", Tboil - T0 )
-print("Hvap = 40.65 kJ/mol", NotImplementedError)
+print("Hvap = 40.65 kJ/mol", H_gas_CRC(Tboil) - H_liq_CRC(Tboil))
 print()
+#END
 
 plt.show()
