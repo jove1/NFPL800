@@ -36,16 +36,10 @@ class Phase2SL:
 
     def dGdy(self, y):
         y1a, y1b, y2a, y2b = y
-        return np.array([
-            y2a * self.aa + y2b * self.ab + RT*( 1 + np.log(y1a) ),
-            y2a * self.ba + y2b * self.bb + RT*( 1 + np.log(y1b) ),
-            y1a * self.aa + y1b * self.ba + RT*( 1 + np.log(y2a) ),
-            y1a * self.ab + y1b * self.bb + RT*( 1 + np.log(y2b) ),
-        ])
-    
-    def dXdy(self, y):
-        return np.array([[1, 0, 1, 0], 
-                         [0, 1, 0, 1]])/2
+#PROBLEM
+        # Write gradient of self.G as np.array([ dG/dx[0], dG/dx[1] ])
+        return np.array([0, 0, 0, 0])
+#END
         
 
 RT = R * 100
