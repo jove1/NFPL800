@@ -85,9 +85,11 @@ print("Minimisation done in", time.time()-started)
 
 plt.figure()
 plt.title("2SL minimize")
+plt.xlim(0, 1)
 plt.plot(xx[1].ravel(), gg.ravel(), ".", ms=0.5)
 plt.plot(x, g, ".-")
-plt.xlim(0,1)
+
+
 
 
 from scipy.spatial import ConvexHull
@@ -105,13 +107,19 @@ lines = [points[::131]]
 
 plt.figure()
 plt.title("2SL convex hull")
+plt.xlim(0, 1)
 plt.plot(xx[1].ravel(), gg.ravel(), ".", ms=0.5)
 from matplotlib.collections import LineCollection
 plt.gca().add_collection( LineCollection(lines, color="C1") )
-plt.xlim(0,1)
 
 
+plt.figure()
+plt.title("2SL")
+plt.xlim(0, 1)
+plt.plot(xx[1].ravel(), gg.ravel(), ".", ms=0.5)
+plt.gca().add_collection( LineCollection(lines, color="C2") )
 
+@InteractiveFigureSlope
 def calc_slope(slope):
     from scipy import optimize
 #PROBLEM
@@ -137,18 +145,18 @@ def calc_slope(slope):
 #END
     return [0, x[1], 1], [mu[0], g, mu[1]]
 
-with InteractiveFigureSlope("2SL", calc_slope) as ax:
-    ax.plot(xx[1].ravel(), gg.ravel(), ".", ms=0.5)
-    ax.add_collection( LineCollection(lines, color="C2") )
 
+plt.figure()
+plt.title("2SL")
+plt.xlim(0, 1)
+plt.plot(xx[1].ravel(), gg.ravel(), ".", ms=0.5)
+plt.gca().add_collection( LineCollection(lines, color="C2") )
+
+@InteractiveFigurePos
 def calc_pos(x1):
 #PROBLEM
     g = phase.G([1, 0, 1-x1, x1])
     return [0, x1, 1], [ g, g, g ]
 #END
-
-with InteractiveFigurePos("2SL", calc_pos) as ax:
-    ax.plot(xx[1].ravel(), gg.ravel(), ".", ms=0.5)
-    ax.add_collection( LineCollection(lines, color="C2") )
 
 plt.show()

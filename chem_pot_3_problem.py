@@ -25,6 +25,14 @@ def dG2dx(x):
     return 0 # Write derivative of G2
 #END
 
+x = np.linspace(0, 1, 150)
+
+plt.figure()
+plt.title("G(x), root")
+plt.xlim(0, 1)
+plt.plot(x, G2(x))
+
+@InteractiveFigureSlope
 def calc_root(slope):
     from scipy import optimize
 #PROBLEM
@@ -40,11 +48,12 @@ def calc_root(slope):
     g = G2(x)
     return [0, x, 1], [g - x*slope, g, g + (1-x)*slope]
 
-with InteractiveFigureSlope("G(x), root", calc_root) as ax:
-    x = np.linspace(0, 1, 150)
-    ax.plot(x, G2(x))
+plt.figure()
+plt.title("G(x), minimize")
+plt.xlim(0, 1)
+plt.plot(x, G2(x))
 
-
+@InteractiveFigureSlope
 def calc_minimize(slope):
     from scipy import optimize
 #PROBLEM
@@ -60,9 +69,5 @@ def calc_minimize(slope):
     x = sol.x[0]
     g = G2(x)
     return [0, x, 1], [g - x*slope, g, g + (1-x)*slope]
-
-with InteractiveFigureSlope("G(x), minimize", calc_minimize) as ax:
-    x = np.linspace(0, 1, 150)
-    ax.plot(x, G2(x))
 
 plt.show()

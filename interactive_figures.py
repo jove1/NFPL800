@@ -5,20 +5,12 @@ import matplotlib.pyplot as plt
 
 class InteractiveFigure:
     
-    def __init__(self, title, calc):
-        self.title = title
+    def __init__(self, calc):
         self.calc = calc
-
-    def __enter__(self):
-        self.ax = plt.figure().gca()
-        self.ax.set_title(self.title)
-        self.ax.set_xlim(0, 1)
-        return self.ax
-
-    def __exit__(self, *args):
+        self.ax = plt.gca()
         self.ax.figure.canvas.mpl_connect('motion_notify_event', self.event_handler)
         self.ax.figure.canvas.mpl_connect('button_press_event', self.event_handler)
-        self.ax._handler_reference = self
+        self.ax._keep_reference = self
 
     def event_handler(self, event):
         from matplotlib.backend_bases import MouseButton
@@ -28,11 +20,11 @@ class InteractiveFigure:
 
 class InteractiveFigurePos(InteractiveFigure):
 
-    def __exit__(self, *args):
+    def __init__(self, calc):
+        super().__init__(calc)
         self.mu_line, = self.ax.plot([], [], ".-")
         self.set_line = self.ax.axvline(-1, c="k", ls="--")
         self.update(0.5, 0)
-        super().__exit__(*args)
 
     def update(self, x, y):
         self.set_line.set_xdata([x,x])
@@ -41,12 +33,11 @@ class InteractiveFigurePos(InteractiveFigure):
 
 class InteractiveFigureSlope(InteractiveFigure):
 
-    def __exit__(self, *args):
+    def __init__(self, calc):
+        super().__init__(calc)
         self.mu_line, = self.ax.plot([], [], ".-")
         self.set_line, = self.ax.plot([], [], "k.--")
         self.update(0, 0)
-        super().__exit__(*args)
-
 
     def update(self, x, y):
         ylim = self.ax.get_ylim()

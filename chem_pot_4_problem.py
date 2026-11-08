@@ -40,6 +40,14 @@ L1 = 2000
 
 phase = Phase(Ga, Gb, L0, L1)
 
+x = np.linspace(0, 1, 150)
+
+plt.figure()
+plt.title("phase.G([xa,xb]), root")
+plt.xlim(0, 1)
+plt.plot(x, phase.G([1-x, x]))
+
+@InteractiveFigureSlope
 def calc_root(slope):
     from scipy import optimize
 #PROBLEM
@@ -63,10 +71,15 @@ def calc_root(slope):
 #END
     return [0, x[1], 1], [mu[0], g, mu[1]]
 
-with InteractiveFigureSlope("phase.G([xa,xb]), root", calc_root) as ax:
-    x = np.linspace(0, 1, 150)
-    ax.plot(x, phase.G([1-x, x]))
 
+x = np.linspace(0, 1, 150)
+
+plt.figure()
+plt.title("phase.G([xa,xb]), minimize")
+plt.xlim(0, 1)
+plt.plot(x, phase.G([1-x, x]))
+
+@InteractiveFigureSlope
 def calc_minimize(slope):
     from scipy import optimize
 #PROBLEM
@@ -87,9 +100,5 @@ def calc_minimize(slope):
     mu = np.array([0, slope])
 #END
     return [0, x[1], 1], [mu[0], g, mu[1]]
-
-with InteractiveFigureSlope("phase.G([xa,xb]), minimize", calc_minimize) as ax:
-    x = np.linspace(0, 1, 150)
-    ax.plot(x, phase.G([1-x, x]))
 
 plt.show()

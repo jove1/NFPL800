@@ -24,6 +24,14 @@ def dGdx(x):
     return 0 # Write derivative of G
 #END
 
+x = np.linspace(0, 1, 150)
+
+plt.figure()
+plt.title("G(x)")
+plt.xlim(0, 1)
+plt.plot(x, G(x))
+
+@InteractiveFigurePos
 def calc(x):
     g = G(x)
     dg = dGdx(x)
@@ -34,9 +42,5 @@ def calc(x):
         g  # Write value of tanget at 1 (chemical potential)
     ]
 #END
-
-with InteractiveFigurePos("G(x)", calc) as ax:
-    x = np.linspace(0, 1, 150)
-    ax.plot(x, G(x))
 
 plt.show()

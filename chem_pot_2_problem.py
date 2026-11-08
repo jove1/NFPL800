@@ -38,6 +38,14 @@ L = -4000
 
 phase = Phase(Ga, Gb, L)
 
+x = np.linspace(0, 1, 150)
+
+plt.figure()
+plt.title("phase.G([xa, xb])")
+plt.xlim(0, 1)
+plt.plot(x, phase.G([1-x, x]))
+
+@InteractiveFigurePos
 def calc(x1):
     x = np.array([1-x1, x1])
     g = phase.G(x)
@@ -50,8 +58,5 @@ def calc(x1):
     ]
 #END
 
-with InteractiveFigurePos("phase.G([xa, xb])", calc) as ax:
-    x = np.linspace(0, 1, 150)
-    ax.plot(x, phase.G([1-x, x]))
 
 plt.show()
