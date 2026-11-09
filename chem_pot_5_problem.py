@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Gibbs-energy models and chemical potentials for phase-equilibrium exercises.
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,12 +7,14 @@ from interactive_figures import InteractiveFigureSlope, InteractiveFigurePos
 
 np.seterr(all='print')
 
-R = 8.314
+R = 8.314  # Gas constant, in J/(mol K).
 
+# Ideal-mixing contribution, with the limiting value x*ln(x) = 0 at x = 0.
 def xlnx(x):
     with np.errstate(divide='ignore', invalid='ignore'):
         return np.where(x, x*np.log(x), 0)
 
+# Two-sublattice phase model. Each sublattice has A/B site fractions.
 class Phase2SL:
     def __init__(self, aa, ab, ba, bb):
         self.aa = aa
@@ -19,11 +22,13 @@ class Phase2SL:
         self.ba = ba
         self.bb = bb
     
+    # Convert the four sublattice fractions into the overall binary composition [Xa, Xb].
     def X(self, y):
         y1a, y1b, y2a, y2b = y
         return np.array([y1a + y2a, 
                          y1b + y2b])/2
 
+    # Gibbs energy from pair interactions and ideal mixing on both sublattices.
     def G(self, y):
         y1a, y1b, y2a, y2b = y
         return (
@@ -34,15 +39,16 @@ class Phase2SL:
                 RT*( xlnx(y1a) + xlnx(y1b) + xlnx(y2a) + xlnx(y2b) )
         )
 
+    # Gradient with respect to the four sublattice site fractions.
     def dGdy(self, y):
         y1a, y1b, y2a, y2b = y
 #PROBLEM
-        # Write gradient of self.G as np.array([ dG/dx[0], dG/dx[1] ])
+        # Write gradient of self.G as np.array([ dG/dy[0], dG/dy[1], dG/dy[2], dG/dy[2] ])
         return np.array([0, 0, 0, 0])
 #END
         
 
-RT = R * 100
+RT = R * 100  # Thermal energy
 #RT = R * 200
 #RT = R * 200
 aa, bb = 10000, 5000
@@ -51,6 +57,7 @@ ab = ba = (aa+bb)/2 - 5000
 phase = Phase2SL(aa, ab, ba, bb) 
 
 
+# Sample pairs of sublattice compositions to map the model energy over composition space.
 x = np.linspace(0, 1, 100)
 y1b, y2b = np.meshgrid(x, x)
 y = [1-y1b, y1b, 1-y2b, y2b]
@@ -60,9 +67,11 @@ print(xx.shape)
 print(gg.shape)
 
 
+# Constrained minimization is used below to find the lowest energy at each composition.
 from scipy import optimize
 
 import time
+# For each overall composition, minimize G while enforcing sublattice normalization.
 started = time.time()
 g = []
 for x1 in x:
@@ -92,6 +101,7 @@ plt.plot(x, g, ".-")
 
 
 
+# The lower convex hull identifies the thermodynamically stable envelope
 from scipy.spatial import ConvexHull
 points = np.column_stack([ xx[1].ravel(), gg.ravel() ])
 
@@ -99,7 +109,7 @@ started = time.time()
 hull = ConvexHull(points)
 print("Convex hull in", time.time()-started)
 
-mask = hull.equations[:,1] < 0
+# In the (composition, energy) plane, retain hull facets forming the lower boundary.
 #PROBLEM
 # Select correct lines for lower part of convex hull
 lines = [points[::131]]

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Gibbs-energy models and chemical potentials for phase-equilibrium exercises.
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,12 +7,14 @@ from interactive_figures import InteractiveFigureSlope
 
 np.seterr(all='print')
 
-R = 8.314
+R = 8.314  # Gas constant, in J/(mol K).
 
+# Ideal-mixing contribution, with x*ln(x) defined as 0 in the limit x -> 0.
 def xlnx(x):
     with np.errstate(divide='ignore', invalid='ignore'):
         return np.where(x, x*np.log(x), 0)
 
+# Binary phase with end-member energies and composition-dependent interaction terms.
 class Phase:
     def __init__(self, Ga, Gb, L0, L1):
         self.Ga = Ga
@@ -19,10 +22,12 @@ class Phase:
         self.L0 = L0
         self.L1 = L1
 
+    # Molar Gibbs energy for the two component fractions [xa, xb].
     def G(self, x):
         xa, xb = x
         return self.Ga*xa + self.Gb*xb + ( self.L0 + self.L1*(xa-xb) )*xa*xb + RT*( xlnx(xa) + xlnx(xb) )
 
+    # Gradient of G with respect to both independent composition variables.
     def dGdx(self, x):
         xa, xb = x
 #PROBLEM
@@ -30,7 +35,7 @@ class Phase:
         return np.array([0, 0]) 
 #END
 
-I = np.eye(2)
+I = np.eye(2) # Identity matrix
 RT = R * 300
 Ga = 500
 Gb = 2000
@@ -40,6 +45,7 @@ L1 = 2000
 
 phase = Phase(Ga, Gb, L0, L1)
 
+# Evaluate the energy along xa + xb = 1 for plotting.
 x = np.linspace(0, 1, 150)
 
 plt.figure()
@@ -47,6 +53,8 @@ plt.title("phase.G([xa,xb]), root")
 plt.xlim(0, 1)
 plt.plot(x, phase.G([1-x, x]))
 
+# The callback receives a requested slope and returns three points on the tangent.
+# The interactive module only consumes the returned x- and y-coordinate sequences.
 @InteractiveFigureSlope
 def calc_root(slope):
     from scipy import optimize
@@ -74,6 +82,7 @@ def calc_root(slope):
 
 x = np.linspace(0, 1, 150)
 
+# The minimization approach
 plt.figure()
 plt.title("phase.G([xa,xb]), minimize")
 plt.xlim(0, 1)
